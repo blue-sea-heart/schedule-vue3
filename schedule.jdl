@@ -28,7 +28,7 @@ entity Category {
 }
 
 entity Tag {
-  name String required maxlength(60) unique, // 暂时全局唯一；若多用户，用 Liquibase 做复合唯一
+  name String required maxlength(60) unique, // 暂时全局唯一；多用户场景可用 Liquibase 做复合唯一
   color String maxlength(20)
 }
 
@@ -54,7 +54,7 @@ entity Reminder {
   attemptCount Integer,          // 重试计数
   lastAttemptAt ZonedDateTime,   // 最后尝试时间
   lastErrorMsg String maxlength(500),
-  errorMsg String maxlength(500) // 保留你原字段，兼容老日志含义
+  errorMsg String maxlength(500) // 保留原字段，兼容老日志
 }
 
 entity InAppNotification {
@@ -73,10 +73,10 @@ entity ViewPreference {
 }
 
 // =========================
-// 关系（用 login 做显示字段，降噪）
+// 关系（用 login/name 做显示字段，降噪）
 // =========================
 relationship ManyToOne {
-  Schedule{owner(login)} to User
+  Schedule{owner(login)} to User with builtInEntity
 }
 
 relationship ManyToOne {
@@ -96,21 +96,17 @@ relationship OneToMany {
 }
 
 relationship ManyToOne {
-  InAppNotification{user(login)} to User
+  InAppNotification{user(login)} to User with builtInEntity
 }
 
 relationship OneToOne {
-  ViewPreference{user(login)} to User
+  ViewPreference{user(login)} to User with builtInEntity
 }
 
 // =========================
-// 生成选项（去掉重复项，统一风格）
+/* 生成选项（JHipster 8 兼容） */
 // =========================
 dto * with mapstruct
 service * with serviceClass
 paginate * with pagination
 filter *
-
-options {
-incrementalChangelog
-}
