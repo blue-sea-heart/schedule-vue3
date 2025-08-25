@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <!-- 用户+起始时间，常见筛选 -->
+  <changeSet id="20250825-idx-schedule-owner-start" author="you">
+    <createIndex indexName="idx_schedule_owner_start" tableName="schedule">
+      <column name="owner_id"/>
+      <column name="start_time"/>
+    </createIndex>
+  </changeSet>
+
+  <!-- 提醒：按 sent + remindAt 扫描 -->
+  <changeSet id="20250825-idx-reminder-sent-remindat" author="you">
+    <createIndex indexName="idx_reminder_sent_remindat" tableName="reminder">
+      <column name="sent"/>
+      <column name="remind_at"/>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

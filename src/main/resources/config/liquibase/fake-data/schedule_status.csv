@@ -1,0 +1,5 @@
+code,name,color,sort_no,is_default,is_terminal
+PLANNED,计划中,#42a5f5,10,true,false
+IN_PROGRESS,进行中,#66bb6a,20,false,false
+COMPLETED,已完成,#26a69a,30,false,true
+CANCELED,已取消,#ef5350,40,false,true

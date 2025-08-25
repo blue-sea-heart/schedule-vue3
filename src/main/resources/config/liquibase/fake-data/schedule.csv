@@ -1,0 +1,11 @@
+id;title;description;location;all_day;start_time;end_time;priority;completed_at;visibility
+1;渐渐 最;../fake-data/blob/hipster.txt;whether aboard yuck;true;2025-08-24T19:41:04;2025-08-25T03:15:29;LOW;2025-08-25T01:53:26;TEAM
+2;pfft;../fake-data/blob/hipster.txt;关闭;true;2025-08-25T02:23:54;2025-08-25T04:38:10;HIGH;2025-08-25T07:59:41;TEAM
+3;as;../fake-data/blob/hipster.txt;打 绿;true;2025-08-24T15:14:05;2025-08-24T20:01:18;LOW;2025-08-25T04:47:50;PRIVATE
+4;brr 跳 cycle;../fake-data/blob/hipster.txt;oof;true;2025-08-25T01:46:28;2025-08-24T14:15:03;URGENT;2025-08-24T14:04:33;TEAM
+5;duh;../fake-data/blob/hipster.txt;however 勇敢 who;false;2025-08-24T23:55:31;2025-08-24T13:07:07;HIGH;2025-08-24T12:33:21;PRIVATE
+6;咀 er;../fake-data/blob/hipster.txt;ack until;false;2025-08-25T06:58:02;2025-08-25T06:30:13;HIGH;2025-08-24T11:45:44;TEAM
+7;马虎 custom 大;../fake-data/blob/hipster.txt;甜 uh-huh which;true;2025-08-24T12:35:49;2025-08-25T02:22:26;URGENT;2025-08-25T04:17:30;PRIVATE
+8;撬 metabolite;../fake-data/blob/hipster.txt;incidentally;true;2025-08-24T17:53:18;2025-08-25T02:21:10;HIGH;2025-08-24T15:55:19;PUBLIC
+9;几乎;../fake-data/blob/hipster.txt;生动;true;2025-08-24T19:23:36;2025-08-24T15:08:52;LOW;2025-08-24T10:00:10;TEAM
+10;during;../fake-data/blob/hipster.txt;unless;true;2025-08-25T02:19:23;2025-08-25T09:31:05;MEDIUM;2025-08-25T07:33:50;PUBLIC

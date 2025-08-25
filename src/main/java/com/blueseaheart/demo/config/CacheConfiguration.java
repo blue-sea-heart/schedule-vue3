@@ -46,6 +46,16 @@ public class CacheConfiguration {
             createCache(cm, com.blueseaheart.demo.domain.User.class.getName());
             createCache(cm, com.blueseaheart.demo.domain.Authority.class.getName());
             createCache(cm, com.blueseaheart.demo.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.blueseaheart.demo.domain.ScheduleStatus.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.Category.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.Tag.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.Tag.class.getName() + ".schedules");
+            createCache(cm, com.blueseaheart.demo.domain.Schedule.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.Schedule.class.getName() + ".reminders");
+            createCache(cm, com.blueseaheart.demo.domain.Schedule.class.getName() + ".tags");
+            createCache(cm, com.blueseaheart.demo.domain.Reminder.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.InAppNotification.class.getName());
+            createCache(cm, com.blueseaheart.demo.domain.ViewPreference.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

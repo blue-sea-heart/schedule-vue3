@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20250825094831"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "defaultView",
+      "fieldType": "ViewType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DAY,WEEK,MONTH,LIST"
+    },
+    {
+      "fieldName": "lastStart",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "lastEnd",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "weekStart",
+      "fieldType": "WeekStart",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MONDAY,SUNDAY"
+    },
+    {
+      "fieldName": "showWeekend",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ViewPreference",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,44 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+  <changeSet id="20250825-01-seed-schedule-status" author="you">
+    <insert tableName="schedule_status">
+      <column name="id" valueNumeric="1"/>
+      <column name="code" value="PLANNED"/>
+      <column name="name" value="计划中"/>
+      <column name="color" value="#42a5f5"/>
+      <column name="sort_no" valueNumeric="10"/>
+      <column name="is_default" valueBoolean="true"/>
+      <column name="is_terminal" valueBoolean="false"/>
+    </insert>
+    <insert tableName="schedule_status">
+      <column name="id" valueNumeric="2"/>
+      <column name="code" value="IN_PROGRESS"/>
+      <column name="name" value="进行中"/>
+      <column name="color" value="#ffb300"/>
+      <column name="sort_no" valueNumeric="20"/>
+      <column name="is_default" valueBoolean="false"/>
+      <column name="is_terminal" valueBoolean="false"/>
+    </insert>
+    <insert tableName="schedule_status">
+      <column name="id" valueNumeric="3"/>
+      <column name="code" value="COMPLETED"/>
+      <column name="name" value="已完成"/>
+      <column name="color" value="#66bb6a"/>
+      <column name="sort_no" valueNumeric="30"/>
+      <column name="is_default" valueBoolean="false"/>
+      <column name="is_terminal" valueBoolean="true"/>
+    </insert>
+    <insert tableName="schedule_status">
+      <column name="id" valueNumeric="4"/>
+      <column name="code" value="CANCELED"/>
+      <column name="name" value="已取消"/>
+      <column name="color" value="#ef5350"/>
+      <column name="sort_no" valueNumeric="40"/>
+      <column name="is_default" valueBoolean="false"/>
+      <column name="is_terminal" valueBoolean="true"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

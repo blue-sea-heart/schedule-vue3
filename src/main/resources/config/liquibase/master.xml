@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <property name="now" value="now()" dbms="mysql"/>
-    <property name="floatType" value="float" dbms="mysql"/>
-    <property name="clobType" value="clob" dbms="mysql"/>
-    <property name="blobType" value="longblob" dbms="mysql"/>
-    <property name="uuidType" value="varchar(36)" dbms="mysql"/>
-    <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
-    <property name="timeType" value="time(6)" dbms="mysql"/>
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <property name="now" value="now()" dbms="mysql"/>
+  <property name="floatType" value="float" dbms="mysql"/>
+  <property name="clobType" value="clob" dbms="mysql"/>
+  <property name="blobType" value="longblob" dbms="mysql"/>
+  <property name="uuidType" value="varchar(36)" dbms="mysql"/>
+  <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
+  <property name="timeType" value="time(6)" dbms="mysql"/>
 
-    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
-    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+  <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094825_added_entity_ScheduleStatus.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094826_added_entity_Category.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094827_added_entity_Tag.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094828_added_entity_Schedule.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094829_added_entity_Reminder.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094830_added_entity_InAppNotification.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094831_added_entity_ViewPreference.xml"
+           relativeToChangelogFile="false"/>
+  <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+  <include file="config/liquibase/changelog/20250825094828_added_entity_constraints_Schedule.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094829_added_entity_constraints_Reminder.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094830_added_entity_constraints_InAppNotification.xml"
+           relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/20250825094831_added_entity_constraints_ViewPreference.xml"
+           relativeToChangelogFile="false"/>
+<!--  <include file="config/liquibase/changelog/20250825_seed_schedule_status.xml" relativeToChangelogFile="false"/>-->
+
+  <include file="config/liquibase/changelog/20250825_add_indexes.xml" relativeToChangelogFile="false"/>
+  <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+  <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

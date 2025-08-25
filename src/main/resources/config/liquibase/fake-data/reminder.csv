@@ -1,0 +1,11 @@
+id;remind_at;channel;subject;content;sent;attempt_count;last_attempt_at;last_error_msg;error_msg
+1;2025-08-24T10:46:06;EMAIL;抄;../fake-data/blob/hipster.txt;true;9775;2025-08-24T20:26:39;next where;何尝
+2;2025-08-25T02:23:02;IN_APP;都 yahoo;../fake-data/blob/hipster.txt;false;17578;2025-08-24T12:31:33;爬 yahoo;co-producer 十分 啃
+3;2025-08-24T19:24:53;IN_APP;through circa;../fake-data/blob/hipster.txt;false;4862;2025-08-24T20:39:03;phew yum 一定;advertisement 拣
+4;2025-08-25T01:30:01;IN_APP;which 更;../fake-data/blob/hipster.txt;false;17968;2025-08-25T02:59:06;masterpiece typeface designation;straw
+5;2025-08-25T01:11:00;IN_APP;barge;../fake-data/blob/hipster.txt;false;11376;2025-08-25T00:49:35;wafer;incidentally
+6;2025-08-24T11:40:03;EMAIL;deer 启动;../fake-data/blob/hipster.txt;false;26232;2025-08-24T19:55:13;where 就 into;lobster fooey
+7;2025-08-24T19:30:59;EMAIL;loaf;../fake-data/blob/hipster.txt;false;5127;2025-08-25T04:03:15;fax;alongside 格外
+8;2025-08-24T12:51:22;IN_APP;仅;../fake-data/blob/hipster.txt;false;12094;2025-08-25T08:38:54;following;yum hence 干脆
+9;2025-08-25T09:00:18;EMAIL;平坦 whoever whereas;../fake-data/blob/hipster.txt;false;9392;2025-08-24T17:53:31;when;behest 拿 短
+10;2025-08-25T02:40:25;IN_APP;above;../fake-data/blob/hipster.txt;true;30672;2025-08-25T04:01:44;撕 SUV nerve;how bah once
