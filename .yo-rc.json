@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "scheduleVue3",
+    "buildTool": "maven",
+    "cacheProvider": "caffeine",
+    "clientFramework": "vue",
+    "clientTestFrameworks": [],
+    "clientTheme": "cerulean",
+    "clientThemeVariant": "light",
+    "creationTimestamp": 1756111028019,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "enableHibernateCache": true,
+    "enableTranslation": false,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "ZjU0YTYxNTM5NTkyMjc5NGFiODE0MTA5MjA0YTk1YWMwYjMzN2I3NWMwZWQ1ZjFjMGQwMDBhNTY2NzE4MWI3YThjYjU4OTIzZGYwNTM0Njc4NTNkMWQwNGQzMmViN2QxMzI4OTc4NDlmZTM3MWMxN2VjMGNjNGMyMmYzZDExMDk=",
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "zh-cn",
+    "packageName": "com.blueseaheart.demo",
+    "prodDatabaseType": "mysql",
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": false
+  }
+}
