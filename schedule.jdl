@@ -1,0 +1,116 @@
+// =========================
+// Enums
+// =========================
+enum Priority { LOW, MEDIUM, HIGH, URGENT }
+enum ReminderChannel { IN_APP, EMAIL }
+enum ViewType { DAY, WEEK, MONTH, LIST }
+enum WeekStart { MONDAY, SUNDAY }            // 视图偏好补充
+enum Visibility { PRIVATE, TEAM, PUBLIC }    // 以后要分享就不改表
+
+// =========================
+// Lookup 实体：ScheduleStatus
+// =========================
+entity ScheduleStatus {
+  code String required maxlength(40) unique,
+  name String required maxlength(60) unique,
+  color String maxlength(20),
+  sortNo Integer required,
+  isDefault Boolean required,
+  isTerminal Boolean required
+}
+
+// =========================
+// 业务实体
+// =========================
+entity Category {
+  name String required maxlength(60),
+  color String maxlength(20)
+}
+
+entity Tag {
+  name String required maxlength(60) unique, // 暂时全局唯一；若多用户，用 Liquibase 做复合唯一
+  color String maxlength(20)
+}
+
+entity Schedule {
+  title String required maxlength(140),
+  description TextBlob,
+  location String maxlength(140),
+  allDay Boolean required,
+  startTime ZonedDateTime required,
+  endTime ZonedDateTime,
+  priority Priority required,
+  completedAt ZonedDateTime,
+  visibility Visibility required
+}
+
+entity Reminder {
+  remindAt ZonedDateTime required,
+  channel ReminderChannel required,
+  subject String maxlength(140),
+  content TextBlob,
+  sent Boolean required,
+  // —— 可观测性增强 —— //
+  attemptCount Integer,          // 重试计数
+  lastAttemptAt ZonedDateTime,   // 最后尝试时间
+  lastErrorMsg String maxlength(500),
+  errorMsg String maxlength(500) // 保留你原字段，兼容老日志含义
+}
+
+entity InAppNotification {
+  title String required maxlength(140),
+  content TextBlob,
+  createdAt ZonedDateTime required,
+  read Boolean required
+}
+
+entity ViewPreference {
+  defaultView ViewType required,
+  lastStart ZonedDateTime,
+  lastEnd ZonedDateTime,
+  weekStart WeekStart required,  // 新增：周起始
+  showWeekend Boolean required   // 新增：是否显示周末
+}
+
+// =========================
+// 关系（用 login 做显示字段，降噪）
+// =========================
+relationship ManyToOne {
+  Schedule{owner(login)} to User
+}
+
+relationship ManyToOne {
+  Schedule{status(name)} to ScheduleStatus
+}
+
+relationship ManyToOne {
+  Schedule{category(name)} to Category
+}
+
+relationship ManyToMany {
+  Schedule{tags(name)} to Tag{schedules(title)}
+}
+
+relationship OneToMany {
+  Schedule{reminders} to Reminder{schedule}
+}
+
+relationship ManyToOne {
+  InAppNotification{user(login)} to User
+}
+
+relationship OneToOne {
+  ViewPreference{user(login)} to User
+}
+
+// =========================
+// 生成选项（去掉重复项，统一风格）
+// =========================
+dto * with mapstruct
+service * with serviceClass
+paginate * with pagination
+filter *
+
+options {
+incrementalChangelog
+}
