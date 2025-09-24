@@ -4,6 +4,7 @@ import com.blueseaheart.demo.domain.ScheduleStatus;
 import com.blueseaheart.demo.repository.ScheduleStatusRepository;
 import com.blueseaheart.demo.service.dto.ScheduleStatusDTO;
 import com.blueseaheart.demo.service.mapper.ScheduleStatusMapper;
+import com.blueseaheart.demo.web.rest.errors.BusinessException;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +85,23 @@ public class ScheduleStatusService {
     public Optional<ScheduleStatusDTO> findOne(Long id) {
         LOG.debug("Request to get ScheduleStatus : {}", id);
         return scheduleStatusRepository.findById(id).map(scheduleStatusMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ScheduleStatusDTO> findOneByCode(String code) {
+        return scheduleStatusRepository.findByCode(code).map(scheduleStatusMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public ScheduleStatus requireByCode(String code) {
+        return scheduleStatusRepository
+            .findByCode(code)
+            .orElseThrow(() -> new BusinessException("status.notFound", "所选状态不存在，请联系管理员。"));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ScheduleStatusDTO> findDefault() {
+        return scheduleStatusRepository.findFirstByIsDefaultTrue().map(scheduleStatusMapper::toDto);
     }
 
     /**

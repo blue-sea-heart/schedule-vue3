@@ -1,9 +1,12 @@
 package com.blueseaheart.demo.service;
 
 import com.blueseaheart.demo.domain.Schedule;
+import com.blueseaheart.demo.domain.ScheduleStatus;
 import com.blueseaheart.demo.repository.ScheduleRepository;
+import com.blueseaheart.demo.repository.ScheduleStatusRepository;
 import com.blueseaheart.demo.service.dto.ScheduleDTO;
 import com.blueseaheart.demo.service.mapper.ScheduleMapper;
+import com.blueseaheart.demo.web.rest.errors.BusinessException;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,16 @@ public class ScheduleService {
 
     private final ScheduleMapper scheduleMapper;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, ScheduleMapper scheduleMapper) {
+    private final ScheduleStatusRepository statusRepository;
+
+    public ScheduleService(
+        ScheduleRepository scheduleRepository,
+        ScheduleMapper scheduleMapper,
+        ScheduleStatusRepository statusRepository
+    ) {
         this.scheduleRepository = scheduleRepository;
         this.scheduleMapper = scheduleMapper;
+        this.statusRepository = statusRepository;
     }
 
     /**
@@ -39,6 +49,22 @@ public class ScheduleService {
     public ScheduleDTO save(ScheduleDTO scheduleDTO) {
         LOG.debug("Request to save Schedule : {}", scheduleDTO);
         Schedule schedule = scheduleMapper.toEntity(scheduleDTO);
+        var status = resolveStatus(scheduleDTO.getStatus().getCode(), scheduleDTO.getStatus().getId());
+        if (status.isEmpty()) {
+            throw new BusinessException("schedule.status.notFound", "所选状态不存在，请联系管理员。");
+        }
+        schedule.setStatus(status.get());
+        if (Boolean.TRUE.equals(schedule.getStatus().getIsTerminal())) {
+            throw new BusinessException("schedule.status.terminalOnCreate", "不能用终止状态创建日程。");
+        }
+        if (
+            Boolean.TRUE.equals(schedule.getAllDay()) &&
+            schedule.getEndTime() != null &&
+            schedule.getEndTime().isBefore(schedule.getStartTime())
+        ) {
+            throw new BusinessException("schedule.time.invalidRange", "结束时间不能早于开始时间。");
+        }
+
         schedule = scheduleRepository.save(schedule);
         return scheduleMapper.toDto(schedule);
     }
@@ -51,9 +77,24 @@ public class ScheduleService {
      */
     public ScheduleDTO update(ScheduleDTO scheduleDTO) {
         LOG.debug("Request to update Schedule : {}", scheduleDTO);
-        Schedule schedule = scheduleMapper.toEntity(scheduleDTO);
-        schedule = scheduleRepository.save(schedule);
-        return scheduleMapper.toDto(schedule);
+        Schedule entity = scheduleRepository
+            .findById(scheduleDTO.getId())
+            .orElseThrow(() -> new BusinessException("schedule.notFound", "日程不存在。"));
+        scheduleMapper.partialUpdate(entity, scheduleDTO);
+
+        if (scheduleDTO.getStatus() != null && (scheduleDTO.getStatus().getCode() != null || scheduleDTO.getStatus().getId() != null)) {
+            ScheduleStatus status = resolveStatus(scheduleDTO.getStatus().getCode(), scheduleDTO.getStatus().getId()).orElseThrow(() ->
+                new BusinessException("schedule.status.notFound", "所选状态不存在，请联系管理员。")
+            );
+            entity.setStatus(status);
+        }
+
+        // 若切换到终止态，自动回填完成时间
+        if (Boolean.TRUE.equals(entity.getStatus().getIsTerminal()) && entity.getCompletedAt() == null) {
+            entity.setCompletedAt(java.time.ZonedDateTime.now(java.time.ZoneId.systemDefault()));
+        }
+
+        return scheduleMapper.toDto(scheduleRepository.save(entity));
     }
 
     /**
@@ -105,5 +146,12 @@ public class ScheduleService {
     public void delete(Long id) {
         LOG.debug("Request to delete Schedule : {}", id);
         scheduleRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    Optional<ScheduleStatus> resolveStatus(String code, Long id) {
+        if (code != null && !code.isBlank()) return statusRepository.findByCode(code);
+        if (id != null) return statusRepository.findById(id);
+        return statusRepository.findFirstByIsDefaultTrue();
     }
 }

@@ -1,6 +1,7 @@
 package com.blueseaheart.demo.web.rest;
 
 import com.blueseaheart.demo.repository.ScheduleStatusRepository;
+import com.blueseaheart.demo.security.AuthoritiesConstants;
 import com.blueseaheart.demo.service.ScheduleStatusQueryService;
 import com.blueseaheart.demo.service.ScheduleStatusService;
 import com.blueseaheart.demo.service.criteria.ScheduleStatusCriteria;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -63,6 +65,7 @@ public class ScheduleStatusResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new scheduleStatusDTO, or with status {@code 400 (Bad Request)} if the scheduleStatus has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN")
     @PostMapping("")
     public ResponseEntity<ScheduleStatusDTO> createScheduleStatus(@Valid @RequestBody ScheduleStatusDTO scheduleStatusDTO)
         throws URISyntaxException {
@@ -79,13 +82,14 @@ public class ScheduleStatusResource {
     /**
      * {@code PUT  /schedule-statuses/:id} : Updates an existing scheduleStatus.
      *
-     * @param id the id of the scheduleStatusDTO to save.
+     * @param id                the id of the scheduleStatusDTO to save.
      * @param scheduleStatusDTO the scheduleStatusDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated scheduleStatusDTO,
      * or with status {@code 400 (Bad Request)} if the scheduleStatusDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the scheduleStatusDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN")
     @PutMapping("/{id}")
     public ResponseEntity<ScheduleStatusDTO> updateScheduleStatus(
         @PathVariable(value = "id", required = false) final Long id,
@@ -112,7 +116,7 @@ public class ScheduleStatusResource {
     /**
      * {@code PATCH  /schedule-statuses/:id} : Partial updates given fields of an existing scheduleStatus, field will ignore if it is null
      *
-     * @param id the id of the scheduleStatusDTO to save.
+     * @param id                the id of the scheduleStatusDTO to save.
      * @param scheduleStatusDTO the scheduleStatusDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated scheduleStatusDTO,
      * or with status {@code 400 (Bad Request)} if the scheduleStatusDTO is not valid,
@@ -120,6 +124,7 @@ public class ScheduleStatusResource {
      * or with status {@code 500 (Internal Server Error)} if the scheduleStatusDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN")
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ScheduleStatusDTO> partialUpdateScheduleStatus(
         @PathVariable(value = "id", required = false) final Long id,
@@ -152,6 +157,13 @@ public class ScheduleStatusResource {
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of scheduleStatuses in body.
      */
+    @PreAuthorize(
+        """
+        hasAnyAuthority(
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).USER,
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN
+        )"""
+    )
     @GetMapping("")
     public ResponseEntity<List<ScheduleStatusDTO>> getAllScheduleStatuses(
         ScheduleStatusCriteria criteria,
@@ -170,10 +182,29 @@ public class ScheduleStatusResource {
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
+    @PreAuthorize(
+        """
+        hasAnyAuthority(
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).USER,
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN
+        )"""
+    )
     @GetMapping("/count")
     public ResponseEntity<Long> countScheduleStatuses(ScheduleStatusCriteria criteria) {
         LOG.debug("REST request to count ScheduleStatuses by criteria: {}", criteria);
         return ResponseEntity.ok().body(scheduleStatusQueryService.countByCriteria(criteria));
+    }
+
+    @PreAuthorize(
+        """
+        hasAnyAuthority(
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).USER,
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN
+        )"""
+    )
+    @GetMapping("/by-code/{code}")
+    public ResponseEntity<ScheduleStatusDTO> getByCode(@PathVariable String code) {
+        return ResponseUtil.wrapOrNotFound(scheduleStatusService.findOneByCode(code));
     }
 
     /**
@@ -182,6 +213,13 @@ public class ScheduleStatusResource {
      * @param id the id of the scheduleStatusDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the scheduleStatusDTO, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize(
+        """
+        hasAnyAuthority(
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).USER,
+          T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN
+        )"""
+    )
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleStatusDTO> getScheduleStatus(@PathVariable("id") Long id) {
         LOG.debug("REST request to get ScheduleStatus : {}", id);
@@ -195,6 +233,7 @@ public class ScheduleStatusResource {
      * @param id the id of the scheduleStatusDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("T(com.blueseaheart.demo.security.AuthoritiesConstants).ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteScheduleStatus(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete ScheduleStatus : {}", id);
